@@ -19,17 +19,41 @@ def load_document(file_path:str)->dict:
         "char_count": len(content),
     }
 
+
+def load_documents(folder_path: str) -> list[dict]:
+    """Load all supported documents in a folder."""
+    folder = Path(folder_path)
+
+    if not folder.exists():
+        raise FileNotFoundError(f"Folder not found: {folder}")
+
+    if not folder.is_dir():
+        raise NotADirectoryError(f"Not a directory: {folder}")
+
+    documents = []
+
+    for path in sorted(folder.iterdir()):
+        if path.is_file() and path.suffix.lower() in SUPPORTED_EXTENSIONS:
+            documents.append(load_document(str(path)))
+
+    return documents
+
+
 """**主程序入口**：
 当这个脚本文件直接运行时，下面代码才执行；如果这个文件被别的脚本`import`导入，这一块代码不会执行。
 作用：分离功能代码和测试代码，写模块时非常常用。"""
 if __name__=="__main__":
-    project_root=Path(__file__).resolve().parents[1]
-    sample_path = project_root / "data" / "sample.md"
-    document = load_document(str(sample_path))      #document表示函数load_document的返回值
+        project_root = Path(__file__).resolve().parents[1]
+        data_folder = project_root / "data"
 
-    print(f"Source: {document['source']}")
-    print(f"Characters: {document['char_count']}")
-    print("Content:")
-    print(document["content"])
+        documents = load_documents(str(data_folder))
+
+        print(f"Total documents: {len(documents)}")
+
+        for document in documents:
+            print(f"\nSource: {document['source']}")
+            print(f"Characters: {document['char_count']}")
+            print(document["content"][:100])    #取前100个字符
+
 
 
