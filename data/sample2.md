@@ -1,4 +1,4 @@
-\# Heat Response
+Heat Response
 
 Heat-related negative emotions may change after a heatwave.
 

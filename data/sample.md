@@ -1,4 +1,4 @@
-###### Urban heat research
+Urban heat research
 
 Urban heat vulnerability depends on thermal exposure, human responses, and the built environment.
 
