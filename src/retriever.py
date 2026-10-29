@@ -4,15 +4,15 @@ import re
 
 from loader import load_documents
 from chunker import split_text
-"""`读取文件夹里所有文档` → `把长文档切成小段（chunk）` → `你输入问题` → `程序用关键词比对，找出和问题词语重合最多的文本片段` → 打印结果"""
+"""`读取文件夹里所有文档` → `把长文档切成小段（chunk）`并编号 → `你输入问题` → `程序用关键词比对，找出和问题词语重合最多的文本片段` → 打印结果"""
 
 def tokenize(text: str) -> set[str]:    #将文本转成小写英文词集合
     """Convert text into lowercase word tokens."""
     return set(re.findall(r"[a-zA-Z0-9]+", text.lower()))   #正则提取所有英文字母 + 数字，过滤掉标点、换行、空格
 
 
-def build_chunks(documents: list[dict]) -> list[dict]:      #将文档切片，并记录来源和片段编号
-    """Split documents into chunks while preserving source metadata."""
+
+def build_chunks(documents: list[dict]) -> list[dict]:
     all_chunks = []
 
     for document in documents:
@@ -24,10 +24,12 @@ def build_chunks(documents: list[dict]) -> list[dict]:      #将文档切片，�
 
         for chunk_id, text in enumerate(text_chunks):
             all_chunks.append({
+                "chunk_uid": len(all_chunks),
                 "source": document["source"],
                 "chunk_id": chunk_id,
                 "text": text,
             })
+
 
     return all_chunks
 

@@ -1,5 +1,6 @@
-import sys
-
-print("Hello, Research Copilot!")
-print("Python version:", sys.version)  #版本
-print("Python path:", sys.executable)
+a=3
+b=3
+if a==b:
+    print("两者相等")
+else:
+    print("不相等")
